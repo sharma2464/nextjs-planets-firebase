@@ -1,9 +1,11 @@
 // Import FirebaseAuth and firebase.
-import React from 'react';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import { Block, BlockTitle, Link, List, ListItem, Navbar } from "konsta/react";
+import { useRouter } from "next/router";
+import React from "react";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 // import firebase from 'firebase/compat/app';
 // import 'firebase/compat/auth';
-import firebase from '../config/firebase';
+import firebase from "../config/firebase";
 
 // Configure Firebase.
 // const config = {
@@ -16,20 +18,25 @@ import firebase from '../config/firebase';
 // Configure FirebaseUI.
 const uiConfig = {
   // Popup signin flow rather than redirect flow.
-  signInFlow: 'popup',
+  signInFlow: "popup",
   // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
-  signInSuccessUrl: '/',
+  signInSuccessUrl: "/",
   // We will display Google and Facebook as auth providers.
   signInOptions: [firebase.authProviders.google.PROVIDER_ID],
 };
 
 function SignInScreen() {
+  const router = useRouter();
   return (
-    <div>
-      <h1>My App</h1>
-      <p>Please sign-in:</p>
-      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth} />
-    </div>
+    <>
+      <Navbar title="Signin" left={<Link onClick={() => router.push("/")}>Home</Link>} />
+      <List inset>
+        <BlockTitle color="primary">Planet of the Apps</BlockTitle>
+        <ListItem>
+          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth} />
+        </ListItem>
+      </List>
+    </>
   );
 }
 
